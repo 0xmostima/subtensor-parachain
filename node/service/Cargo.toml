@@ -73,7 +73,7 @@ polkadot-primitives = { git = "https://github.com/paritytech/polkadot", branch =
 polkadot-service = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.16" }
 
 orml-oracle-rpc = { path = "../../orml/oracle/rpc" }
-nakamoto-runtime = { path = "../../runtime/src", optional = true }
+nakamoto-runtime = { path = "../../runtime/nakamoto", optional = true }
 
 
 [features]
