@@ -1,7 +1,7 @@
 [package]
-name = "acala-inspect"
+name = "subtensor-inspect"
 version = "2.3.2"
-authors = ["Acala Developers"]
+authors = ["Subtensor Developers"]
 edition = "2021"
 
 [dependencies]
