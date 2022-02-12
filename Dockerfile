@@ -8,8 +8,6 @@ RUN apt-get update && \
         apt-get dist-upgrade -y -o Dpkg::Options::="--force-confold" && \
         apt-get install -y cmake pkg-config libssl-dev git clang libclang-dev
 
-RUN CARGO_PROFILE_RELEASE_LTO=true RUSTFLAGS="-C codegen-units=1" cargo build --release $BUILD_ARGS
-
 # Clone the template code and checkout the right commit
 RUN git clone --recursive https://github.com/0xmostima/subtensor-parachain.git
 WORKDIR /subtensor-parachain
@@ -17,7 +15,7 @@ RUN echo $(ls /)
 #RUN git checkout 9506b93
 
 # Build the Parachain Collator node
-RUN cargo build --release
+RUN CARGO_PROFILE_RELEASE_LTO=true RUSTFLAGS="-C codegen-units=1" cargo build --release
 
 ### The final stage just copies binary and chainspecs
 
