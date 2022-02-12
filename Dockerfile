@@ -25,8 +25,7 @@ FROM debian:stretch-slim
 # Copy the node into the image
 COPY --from=builder /subtensor-parachain/target/release/parachain-collator .
 
-WORKDIR /app
-RUN /subtensor-parachain/target/release/parachain-collator build-spec --disable-default-bootnode > /app/nakamoto-2001.json
+RUN ./parachain-collator build-spec --disable-default-bootnode > /nakamoto
 ## Copy chainspecs into the image
 #COPY shared/chainspecs/rococo-custom-2-raw.json .
 #COPY shared/chainspecs/rococo-custom-3-raw.json .
