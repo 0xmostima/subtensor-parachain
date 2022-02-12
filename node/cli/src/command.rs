@@ -86,13 +86,13 @@ impl SubstrateCli for Cli {
 			"karura" => Box::new(chain_spec::karura::karura_config()?),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			"karura-dev" => Box::new(chain_spec::karura::karura_dev_config()?),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			"acala" => Box::new(chain_spec::acala::acala_config()?),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			"wendala" => Box::new(chain_spec::acala::wendala_config()?),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			"acala-dev" => Box::new(chain_spec::acala::acala_dev_config()?),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			"acala-latest" => Box::new(chain_spec::acala::latest_acala_config()?),
 			path => {
 				let path = std::path::PathBuf::from(path);
@@ -109,11 +109,11 @@ impl SubstrateCli for Cli {
 					#[cfg(not(feature = "with-nakamoto-runtime"))]
 					return Err(service::KARURA_RUNTIME_NOT_AVAILABLE.into());
 				} else if chain_spec.is_acala() {
-					#[cfg(feature = "with-acala-runtime")]
+					#[cfg(feature = "with-nakamoto-runtime")]
 					{
 						Box::new(chain_spec::acala::ChainSpec::from_json_file(path)?)
 					}
-					#[cfg(not(feature = "with-acala-runtime"))]
+					#[cfg(not(feature = "with-nakamoto-runtime"))]
 					return Err(service::ACALA_RUNTIME_NOT_AVAILABLE.into());
 				} else {
 					#[cfg(feature = "with-mandala-runtime")]
@@ -129,9 +129,9 @@ impl SubstrateCli for Cli {
 
 	fn native_runtime_version(spec: &Box<dyn sc_service::ChainSpec>) -> &'static RuntimeVersion {
 		if spec.is_acala() {
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			return &service::acala_runtime::VERSION;
-			#[cfg(not(feature = "with-acala-runtime"))]
+			#[cfg(not(feature = "with-nakamoto-runtime"))]
 			panic!("{}", service::ACALA_RUNTIME_NOT_AVAILABLE);
 		} else if spec.is_karura() {
 			#[cfg(feature = "with-nakamoto-runtime")]
@@ -232,13 +232,13 @@ fn extract_genesis_wasm(chain_spec: &Box<dyn service::ChainSpec>) -> Result<Vec<
 macro_rules! with_runtime_or_err {
 	($chain_spec:expr, { $( $code:tt )* }) => {
 		if $chain_spec.is_acala() {
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			#[allow(unused_imports)]
 			use service::{acala_runtime::{Block, RuntimeApi}, AcalaExecutorDispatch as Executor};
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			$( $code )*
 
-			#[cfg(not(feature = "with-acala-runtime"))]
+			#[cfg(not(feature = "with-nakamoto-runtime"))]
 			return Err(service::ACALA_RUNTIME_NOT_AVAILABLE.into());
 		} else if $chain_spec.is_karura() {
 			#[cfg(feature = "with-nakamoto-runtime")]

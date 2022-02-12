@@ -148,7 +148,7 @@ pub enum Client {
 	Mandala(Arc<crate::FullClient<mandala_runtime::RuntimeApi, crate::MandalaExecutorDispatch>>),
 	#[cfg(feature = "with-nakamoto-runtime")]
 	Karura(Arc<crate::FullClient<karura_runtime::RuntimeApi, crate::KaruraExecutorDispatch>>),
-	#[cfg(feature = "with-acala-runtime")]
+	#[cfg(feature = "with-nakamoto-runtime")]
 	Acala(Arc<crate::FullClient<acala_runtime::RuntimeApi, crate::AcalaExecutorDispatch>>),
 }
 
@@ -159,7 +159,7 @@ impl ClientHandle for Client {
 			Self::Mandala(client) => T::execute_with_client::<_, _, crate::FullBackend>(t, client.clone()),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => T::execute_with_client::<_, _, crate::FullBackend>(t, client.clone()),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => T::execute_with_client::<_, _, crate::FullBackend>(t, client.clone()),
 		}
 	}
@@ -172,7 +172,7 @@ impl sc_client_api::UsageProvider<Block> for Client {
 			Self::Mandala(client) => client.usage_info(),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.usage_info(),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.usage_info(),
 		}
 	}
@@ -185,7 +185,7 @@ impl sc_client_api::BlockBackend<Block> for Client {
 			Self::Mandala(client) => client.block_body(id),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.block_body(id),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.block_body(id),
 		}
 	}
@@ -196,7 +196,7 @@ impl sc_client_api::BlockBackend<Block> for Client {
 			Self::Mandala(client) => client.block(id),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.block(id),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.block(id),
 		}
 	}
@@ -207,7 +207,7 @@ impl sc_client_api::BlockBackend<Block> for Client {
 			Self::Mandala(client) => client.block_status(id),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.block_status(id),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.block_status(id),
 		}
 	}
@@ -218,7 +218,7 @@ impl sc_client_api::BlockBackend<Block> for Client {
 			Self::Mandala(client) => client.justifications(id),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.justifications(id),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.justifications(id),
 		}
 	}
@@ -229,7 +229,7 @@ impl sc_client_api::BlockBackend<Block> for Client {
 			Self::Mandala(client) => client.block_hash(number),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.block_hash(number),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.block_hash(number),
 		}
 	}
@@ -240,7 +240,7 @@ impl sc_client_api::BlockBackend<Block> for Client {
 			Self::Mandala(client) => client.indexed_transaction(hash),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.indexed_transaction(hash),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.indexed_transaction(hash),
 		}
 	}
@@ -251,7 +251,7 @@ impl sc_client_api::BlockBackend<Block> for Client {
 			Self::Mandala(client) => client.has_indexed_transaction(hash),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.has_indexed_transaction(hash),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.has_indexed_transaction(hash),
 		}
 	}
@@ -262,7 +262,7 @@ impl sc_client_api::BlockBackend<Block> for Client {
 			Self::Mandala(client) => client.block_indexed_body(id),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.block_indexed_body(id),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.block_indexed_body(id),
 		}
 	}
@@ -275,7 +275,7 @@ impl sc_client_api::StorageProvider<Block, crate::FullBackend> for Client {
 			Self::Mandala(client) => client.storage(id, key),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.storage(id, key),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.storage(id, key),
 		}
 	}
@@ -286,7 +286,7 @@ impl sc_client_api::StorageProvider<Block, crate::FullBackend> for Client {
 			Self::Mandala(client) => client.storage_keys(id, key_prefix),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.storage_keys(id, key_prefix),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.storage_keys(id, key_prefix),
 		}
 	}
@@ -301,7 +301,7 @@ impl sc_client_api::StorageProvider<Block, crate::FullBackend> for Client {
 			Self::Mandala(client) => client.storage_hash(id, key),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.storage_hash(id, key),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.storage_hash(id, key),
 		}
 	}
@@ -316,7 +316,7 @@ impl sc_client_api::StorageProvider<Block, crate::FullBackend> for Client {
 			Self::Mandala(client) => client.storage_pairs(id, key_prefix),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.storage_pairs(id, key_prefix),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.storage_pairs(id, key_prefix),
 		}
 	}
@@ -332,7 +332,7 @@ impl sc_client_api::StorageProvider<Block, crate::FullBackend> for Client {
 			Self::Mandala(client) => client.storage_keys_iter(id, prefix, start_key),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.storage_keys_iter(id, prefix, start_key),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.storage_keys_iter(id, prefix, start_key),
 		}
 	}
@@ -349,7 +349,7 @@ impl sc_client_api::StorageProvider<Block, crate::FullBackend> for Client {
 			Self::Mandala(client) => client.child_storage_keys_iter(id, child_info, prefix, start_key),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.child_storage_keys_iter(id, child_info, prefix, start_key),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.child_storage_keys_iter(id, child_info, prefix, start_key),
 		}
 	}
@@ -365,7 +365,7 @@ impl sc_client_api::StorageProvider<Block, crate::FullBackend> for Client {
 			Self::Mandala(client) => client.child_storage(id, child_info, key),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.child_storage(id, child_info, key),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.child_storage(id, child_info, key),
 		}
 	}
@@ -381,7 +381,7 @@ impl sc_client_api::StorageProvider<Block, crate::FullBackend> for Client {
 			Self::Mandala(client) => client.child_storage_keys(id, child_info, key_prefix),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.child_storage_keys(id, child_info, key_prefix),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.child_storage_keys(id, child_info, key_prefix),
 		}
 	}
@@ -397,7 +397,7 @@ impl sc_client_api::StorageProvider<Block, crate::FullBackend> for Client {
 			Self::Mandala(client) => client.child_storage_hash(id, child_info, key),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.child_storage_hash(id, child_info, key),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.child_storage_hash(id, child_info, key),
 		}
 	}
@@ -410,7 +410,7 @@ impl sp_blockchain::HeaderBackend<Block> for Client {
 			Self::Mandala(client) => client.header(&id),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.header(&id),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.header(&id),
 		}
 	}
@@ -421,7 +421,7 @@ impl sp_blockchain::HeaderBackend<Block> for Client {
 			Self::Mandala(client) => client.info(),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.info(),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.info(),
 		}
 	}
@@ -432,7 +432,7 @@ impl sp_blockchain::HeaderBackend<Block> for Client {
 			Self::Mandala(client) => client.status(id),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.status(id),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.status(id),
 		}
 	}
@@ -443,7 +443,7 @@ impl sp_blockchain::HeaderBackend<Block> for Client {
 			Self::Mandala(client) => client.number(hash),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.number(hash),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.number(hash),
 		}
 	}
@@ -454,7 +454,7 @@ impl sp_blockchain::HeaderBackend<Block> for Client {
 			Self::Mandala(client) => client.hash(number),
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.hash(number),
-			#[cfg(feature = "with-acala-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Acala(client) => client.hash(number),
 		}
 	}

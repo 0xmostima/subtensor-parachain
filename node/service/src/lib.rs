@@ -111,7 +111,7 @@ mod karura_executor {
 	}
 }
 
-#[cfg(feature = "with-acala-runtime")]
+#[cfg(feature = "with-nakamoto-runtime")]
 mod acala_executor {
 	pub use acala_runtime;
 
@@ -129,7 +129,7 @@ mod acala_executor {
 	}
 }
 
-#[cfg(feature = "with-acala-runtime")]
+#[cfg(feature = "with-nakamoto-runtime")]
 pub use acala_executor::*;
 #[cfg(feature = "with-nakamoto-runtime")]
 pub use karura_executor::*;
@@ -587,7 +587,7 @@ pub const MANDALA_RUNTIME_NOT_AVAILABLE: &str =
 pub const KARURA_RUNTIME_NOT_AVAILABLE: &str =
 	"Karura runtime is not available. Please compile the node with `--features with-nakamoto-runtime` to enable it.";
 pub const ACALA_RUNTIME_NOT_AVAILABLE: &str =
-	"Acala runtime is not available. Please compile the node with `--features with-acala-runtime` to enable it.";
+	"Acala runtime is not available. Please compile the node with `--features with-nakamoto-runtime` to enable it.";
 
 /// Builds a new object suitable for chain operations.
 pub fn new_chain_ops(
@@ -631,7 +631,7 @@ pub fn new_chain_ops(
 		#[cfg(not(feature = "with-nakamoto-runtime"))]
 		Err(KARURA_RUNTIME_NOT_AVAILABLE.into())
 	} else {
-		#[cfg(feature = "with-acala-runtime")]
+		#[cfg(feature = "with-nakamoto-runtime")]
 		{
 			let PartialComponents {
 				client,
@@ -642,7 +642,7 @@ pub fn new_chain_ops(
 			} = new_partial::<acala_runtime::RuntimeApi, AcalaExecutorDispatch>(config, false, false)?;
 			Ok((Arc::new(Client::Acala(client)), backend, import_queue, task_manager))
 		}
-		#[cfg(not(feature = "with-acala-runtime"))]
+		#[cfg(not(feature = "with-nakamoto-runtime"))]
 		Err(ACALA_RUNTIME_NOT_AVAILABLE.into())
 	}
 }

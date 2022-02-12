@@ -54,13 +54,13 @@ with-mandala-runtime = [
 with-nakamoto-runtime = [
 	"service/with-nakamoto-runtime",
 ]
-with-acala-runtime = [
-	"service/with-acala-runtime",
+with-nakamoto-runtime = [
+	"service/with-nakamoto-runtime",
 ]
 with-all-runtime = [
 	"with-mandala-runtime",
 	"with-nakamoto-runtime",
-	"with-acala-runtime",
+	"with-nakamoto-runtime",
 	"service/with-all-runtime",
 ]
 rococo-native = [

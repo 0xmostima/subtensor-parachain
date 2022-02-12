@@ -35,7 +35,7 @@ fn karura_foundation_accounts_config_is_correct() {
 }
 
 #[test]
-#[cfg(feature = "with-acala-runtime")]
+#[cfg(feature = "with-nakamoto-runtime")]
 fn check_acala_vesting() {
 	let vesting_json = &include_bytes!("../../../../resources/acala-vesting-ACA.json")[..];
 	let vesting: Vec<(AccountId, BlockNumber, BlockNumber, u32, Balance)> =
@@ -51,7 +51,7 @@ fn check_acala_vesting() {
 }
 
 #[test]
-#[cfg(feature = "with-acala-runtime")]
+#[cfg(feature = "with-nakamoto-runtime")]
 fn check_acala_allocation() {
 	let allocation_json = &include_bytes!("../../../../resources/acala-allocation-ACA.json")[..];
 	let allocation: Vec<(AccountId, Balance)> = serde_json::from_slice(allocation_json).unwrap();
