@@ -78,28 +78,8 @@ orml-oracle-rpc = { path = "../../orml/oracle/rpc" }
 default = [ "std" ]
 std = []
 runtime-benchmarks = [
-	"mandala-runtime/runtime-benchmarks",
-	"karura-runtime/runtime-benchmarks",
-	"acala-runtime/runtime-benchmarks",
 	"polkadot-service/runtime-benchmarks",
 ]
 try-runtime = [
-	"mandala-runtime/try-runtime",
-	"karura-runtime/try-runtime",
-	"acala-runtime/try-runtime",
 	"polkadot-service/try-runtime",
-]
-with-mandala-runtime = [
-	"mandala-runtime",
-]
-with-karura-runtime = [
-	"karura-runtime",
-]
-with-acala-runtime = [
-	"acala-runtime",
-]
-with-all-runtime = [
-	"with-mandala-runtime",
-	"with-karura-runtime",
-	"with-acala-runtime",
 ]
