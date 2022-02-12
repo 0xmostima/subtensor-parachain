@@ -8,6 +8,8 @@ RUN apt-get update && \
         apt-get dist-upgrade -y -o Dpkg::Options::="--force-confold" && \
         apt-get install -y cmake pkg-config libssl-dev git clang libclang-dev
 
+RUN CARGO_PROFILE_RELEASE_LTO=true RUSTFLAGS="-C codegen-units=1" cargo build --release $BUILD_ARGS
+
 # Clone the template code and checkout the right commit
 RUN git clone --recursive https://github.com/0xmostima/subtensor-parachain.git
 WORKDIR /subtensor-parachain
