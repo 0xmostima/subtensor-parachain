@@ -28,7 +28,7 @@ use sp_runtime::traits::IdentifyAccount;
 
 #[cfg(feature = "with-acala-runtime")]
 pub mod acala;
-#[cfg(feature = "with-karura-runtime")]
+#[cfg(feature = "with-nakamoto-runtime")]
 pub mod karura;
 #[cfg(feature = "with-mandala-runtime")]
 pub mod mandala;

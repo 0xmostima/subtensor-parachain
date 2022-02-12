@@ -82,9 +82,9 @@ impl SubstrateCli for Cli {
 			"mandala" => Box::new(chain_spec::mandala::mandala_testnet_config()?),
 			#[cfg(feature = "with-mandala-runtime")]
 			"mandala-latest" => Box::new(chain_spec::mandala::latest_mandala_testnet_config()?),
-			#[cfg(feature = "with-karura-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			"karura" => Box::new(chain_spec::karura::karura_config()?),
-			#[cfg(feature = "with-karura-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			"karura-dev" => Box::new(chain_spec::karura::karura_dev_config()?),
 			#[cfg(feature = "with-acala-runtime")]
 			"acala" => Box::new(chain_spec::acala::acala_config()?),
@@ -101,12 +101,12 @@ impl SubstrateCli for Cli {
 					as Box<dyn service::ChainSpec>;
 
 				if chain_spec.is_karura() {
-					#[cfg(feature = "with-karura-runtime")]
+					#[cfg(feature = "with-nakamoto-runtime")]
 					{
 						Box::new(chain_spec::karura::ChainSpec::from_json_file(path)?)
 					}
 
-					#[cfg(not(feature = "with-karura-runtime"))]
+					#[cfg(not(feature = "with-nakamoto-runtime"))]
 					return Err(service::KARURA_RUNTIME_NOT_AVAILABLE.into());
 				} else if chain_spec.is_acala() {
 					#[cfg(feature = "with-acala-runtime")]
@@ -134,9 +134,9 @@ impl SubstrateCli for Cli {
 			#[cfg(not(feature = "with-acala-runtime"))]
 			panic!("{}", service::ACALA_RUNTIME_NOT_AVAILABLE);
 		} else if spec.is_karura() {
-			#[cfg(feature = "with-karura-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			return &service::karura_runtime::VERSION;
-			#[cfg(not(feature = "with-karura-runtime"))]
+			#[cfg(not(feature = "with-nakamoto-runtime"))]
 			panic!("{}", service::KARURA_RUNTIME_NOT_AVAILABLE);
 		} else {
 			#[cfg(feature = "with-mandala-runtime")]
@@ -241,13 +241,13 @@ macro_rules! with_runtime_or_err {
 			#[cfg(not(feature = "with-acala-runtime"))]
 			return Err(service::ACALA_RUNTIME_NOT_AVAILABLE.into());
 		} else if $chain_spec.is_karura() {
-			#[cfg(feature = "with-karura-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			#[allow(unused_imports)]
 			use service::{karura_runtime::{Block, RuntimeApi}, KaruraExecutorDispatch as Executor};
-			#[cfg(feature = "with-karura-runtime")]
+			#[cfg(feature = "with-nakamoto-runtime")]
 			$( $code )*
 
-			#[cfg(not(feature = "with-karura-runtime"))]
+			#[cfg(not(feature = "with-nakamoto-runtime"))]
 			return Err(service::KARURA_RUNTIME_NOT_AVAILABLE.into());
 		} else {
 			#[cfg(feature = "with-mandala-runtime")]

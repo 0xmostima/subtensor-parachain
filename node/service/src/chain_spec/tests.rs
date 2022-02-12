@@ -23,7 +23,7 @@
 use acala_primitives::{AccountId, Balance, BlockNumber};
 
 #[test]
-#[cfg(feature = "with-karura-runtime")]
+#[cfg(feature = "with-nakamoto-runtime")]
 fn karura_foundation_accounts_config_is_correct() {
 	use sp_core::crypto::Ss58Codec;
 

@@ -93,7 +93,7 @@ mod mandala_executor {
 	}
 }
 
-#[cfg(feature = "with-karura-runtime")]
+#[cfg(feature = "with-nakamoto-runtime")]
 mod karura_executor {
 	pub use karura_runtime;
 
@@ -131,7 +131,7 @@ mod acala_executor {
 
 #[cfg(feature = "with-acala-runtime")]
 pub use acala_executor::*;
-#[cfg(feature = "with-karura-runtime")]
+#[cfg(feature = "with-nakamoto-runtime")]
 pub use karura_executor::*;
 #[cfg(feature = "with-mandala-runtime")]
 pub use mandala_executor::*;
@@ -585,7 +585,7 @@ where
 pub const MANDALA_RUNTIME_NOT_AVAILABLE: &str =
 	"Mandala runtime is not available. Please compile the node with `--features with-mandala-runtime` to enable it.";
 pub const KARURA_RUNTIME_NOT_AVAILABLE: &str =
-	"Karura runtime is not available. Please compile the node with `--features with-karura-runtime` to enable it.";
+	"Karura runtime is not available. Please compile the node with `--features with-nakamoto-runtime` to enable it.";
 pub const ACALA_RUNTIME_NOT_AVAILABLE: &str =
 	"Acala runtime is not available. Please compile the node with `--features with-acala-runtime` to enable it.";
 
@@ -617,7 +617,7 @@ pub fn new_chain_ops(
 		#[cfg(not(feature = "with-mandala-runtime"))]
 		Err(MANDALA_RUNTIME_NOT_AVAILABLE.into())
 	} else if config.chain_spec.is_karura() {
-		#[cfg(feature = "with-karura-runtime")]
+		#[cfg(feature = "with-nakamoto-runtime")]
 		{
 			let PartialComponents {
 				client,
@@ -628,7 +628,7 @@ pub fn new_chain_ops(
 			} = new_partial::<karura_runtime::RuntimeApi, KaruraExecutorDispatch>(config, false, false)?;
 			Ok((Arc::new(Client::Karura(client)), backend, import_queue, task_manager))
 		}
-		#[cfg(not(feature = "with-karura-runtime"))]
+		#[cfg(not(feature = "with-nakamoto-runtime"))]
 		Err(KARURA_RUNTIME_NOT_AVAILABLE.into())
 	} else {
 		#[cfg(feature = "with-acala-runtime")]

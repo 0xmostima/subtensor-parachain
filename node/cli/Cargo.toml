@@ -51,15 +51,15 @@ try-runtime = [
 with-mandala-runtime = [
 	"service/with-mandala-runtime",
 ]
-with-karura-runtime = [
-	"service/with-karura-runtime",
+with-nakamoto-runtime = [
+	"service/with-nakamoto-runtime",
 ]
 with-acala-runtime = [
 	"service/with-acala-runtime",
 ]
 with-all-runtime = [
 	"with-mandala-runtime",
-	"with-karura-runtime",
+	"with-nakamoto-runtime",
 	"with-acala-runtime",
 	"service/with-all-runtime",
 ]
