@@ -1,10 +1,18 @@
 ### The Builder Stage Compiles the code
-FROM parity/rust-builder as builder
+FROM rust:buster as builder
+
+RUN rustup default nightly-2021-11-07 && \
+        rustup target add wasm32-unknown-unknown --toolchain nightly-2021-11-07
+
+RUN apt-get update && \
+        apt-get dist-upgrade -y -o Dpkg::Options::="--force-confold" && \
+        apt-get install -y cmake pkg-config libssl-dev git clang libclang-dev
 
 # Clone the template code and checkout the right commit
 RUN git clone https://github.com/0xmostima/subtensor-parachain.git
-WORKDIR /builds/substrate-parachain-template
-RUN git checkout 9506b93
+WORKDIR /subtensor-parachain
+RUN echo $(ls /)
+#RUN git checkout 9506b93
 
 # Build the Parachain Collator node
 RUN cargo build --release
