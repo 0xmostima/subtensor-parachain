@@ -2,7 +2,7 @@
 name = "subtensor-cli"
 version = "0.0.1"
 authors = ["Subtensor Developers"]
-edition = "2022"
+edition = "2021"
 
 [dependencies]
 log = "0.4.8"
