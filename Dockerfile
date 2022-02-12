@@ -9,7 +9,7 @@ RUN apt-get update && \
         apt-get install -y cmake pkg-config libssl-dev git clang libclang-dev
 
 # Clone the template code and checkout the right commit
-RUN git clone https://github.com/0xmostima/subtensor-parachain.git
+RUN git clone --recursive https://github.com/0xmostima/subtensor-parachain.git
 WORKDIR /subtensor-parachain
 RUN echo $(ls /)
 #RUN git checkout 9506b93
