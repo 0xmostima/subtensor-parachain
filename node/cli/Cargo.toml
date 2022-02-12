@@ -48,18 +48,10 @@ try-runtime = [
 	"try-runtime-cli",
 	"service/try-runtime",
 ]
-with-mandala-runtime = [
-	"service/with-mandala-runtime",
-]
-with-nakamoto-runtime = [
-	"service/with-nakamoto-runtime",
-]
 with-nakamoto-runtime = [
 	"service/with-nakamoto-runtime",
 ]
 with-all-runtime = [
-	"with-mandala-runtime",
-	"with-nakamoto-runtime",
 	"with-nakamoto-runtime",
 	"service/with-all-runtime",
 ]
