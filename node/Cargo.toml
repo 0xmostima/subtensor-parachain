@@ -20,8 +20,8 @@ name = "parachain-collator"
 path = "src/main.rs"
 
 [features]
-runtime-benchmarks = ["parachain-template-runtime/runtime-benchmarks"]
-try-runtime = [ "parachain-template-runtime/try-runtime" ]
+runtime-benchmarks = ["nakamoto-runtime/runtime-benchmarks"]
+try-runtime = [ "nakamoto-runtime/try-runtime" ]
 
 [dependencies]
 derive_more = "0.99.2"
@@ -37,7 +37,7 @@ subtensor-service = { path = "service" }
 jsonrpc-core = "18.0.0"
 
 # Local Dependencies
-parachain-template-runtime = { path = "../runtime" }
+nakamoto-runtime = { path = "../runtime/nakamoto" }
 
 # Substrate Dependencies
 frame-benchmarking = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.16" }
