@@ -1,8 +1,8 @@
 [package]
-name = "acala-cli"
-version = "2.3.2"
-authors = ["Acala Developers"]
-edition = "2021"
+name = "subtensor-cli"
+version = "0.0.1"
+authors = ["Subtensor Developers"]
+edition = "2022"
 
 [dependencies]
 log = "0.4.8"
@@ -26,8 +26,8 @@ polkadot-cli = { git = "https://github.com/paritytech/polkadot", branch = "relea
 polkadot-primitives = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.16" }
 polkadot-service = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.16" }
 
-inspect = { package = "acala-inspect", path = "../../inspect" }
-service = { package = "acala-service", path = "../service", default-features = false, optional = true }
+inspect = { package = "subtensor-inspect", path = "../../inspect" }
+service = { package = "subtensor-service", path = "../service", default-features = false, optional = true }
 
 [build-dependencies]
 orml-build-script-utils = { path = "../../orml/build-script-utils"}

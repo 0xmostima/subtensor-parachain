@@ -30,6 +30,8 @@ codec = { package = "parity-scale-codec", version = "2.0.0" }
 structopt = "0.3.8"
 serde = { version = "1.0.132", features = ["derive"] }
 hex-literal = "0.3.1"
+subtensor-cli = { path = "cli" }
+subtensor-service = { path = "service" }
 
 # RPC related Dependencies
 jsonrpc-core = "18.0.0"
