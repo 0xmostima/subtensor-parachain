@@ -74,11 +74,6 @@ polkadot-service = { git = "https://github.com/paritytech/polkadot", branch = "r
 
 orml-oracle-rpc = { path = "../../orml/oracle/rpc" }
 
-runtime-common = { path = "../../runtime/common" }
-mandala-runtime = { path = "../../runtime/mandala", optional = true }
-karura-runtime = { path = "../../runtime/karura", optional = true }
-acala-runtime = { path = "../../runtime/acala", optional = true }
-
 [features]
 default = [ "std" ]
 std = []
