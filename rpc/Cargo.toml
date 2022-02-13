@@ -21,4 +21,4 @@ pallet-transaction-payment-rpc = { git = "https://github.com/paritytech/substrat
 sc-consensus-manual-seal = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.16" }
 
 orml-oracle-rpc = { path = "../orml/oracle/rpc" }
-runtime-common = { path = "../runtime/common" }
+nakamoto-runtime = { path = "../runtime/nakamoto" }
