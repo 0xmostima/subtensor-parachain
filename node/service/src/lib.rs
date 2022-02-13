@@ -59,7 +59,7 @@ pub use sp_api::ConstructRuntimeApi;
 
 pub mod chain_spec;
 mod client;
-#[cfg(feature = "with-mandala-runtime")]
+#[cfg(feature = "with-nakamoto-runtime")]
 mod instant_finalize;
 
 pub fn default_mock_parachain_inherent_data_provider() -> MockValidationDataInherentDataProvider {
@@ -73,68 +73,26 @@ pub fn default_mock_parachain_inherent_data_provider() -> MockValidationDataInhe
 	}
 }
 
-#[cfg(feature = "with-mandala-runtime")]
-mod mandala_executor {
-	pub use futures::stream::StreamExt;
-	pub use mandala_runtime;
-	pub use sc_consensus_aura::StartAuraParams;
-
-	pub struct MandalaExecutorDispatch;
-	impl sc_executor::NativeExecutionDispatch for MandalaExecutorDispatch {
-		type ExtendHostFunctions = frame_benchmarking::benchmarking::HostFunctions;
-
-		fn dispatch(method: &str, data: &[u8]) -> Option<Vec<u8>> {
-			mandala_runtime::api::dispatch(method, data)
-		}
-
-		fn native_version() -> sc_executor::NativeVersion {
-			mandala_runtime::native_version()
-		}
-	}
-}
-
 #[cfg(feature = "with-nakamoto-runtime")]
 mod karura_executor {
-	pub use karura_runtime;
+	pub use nakamoto_runtime;
 
 	pub struct KaruraExecutorDispatch;
 	impl sc_executor::NativeExecutionDispatch for KaruraExecutorDispatch {
 		type ExtendHostFunctions = frame_benchmarking::benchmarking::HostFunctions;
 
 		fn dispatch(method: &str, data: &[u8]) -> Option<Vec<u8>> {
-			karura_runtime::api::dispatch(method, data)
+			nakamoto_runtime::api::dispatch(method, data)
 		}
 
 		fn native_version() -> sc_executor::NativeVersion {
-			karura_runtime::native_version()
+			nakamoto_runtime::native_version()
 		}
 	}
 }
 
-#[cfg(feature = "with-nakamoto-runtime")]
-mod acala_executor {
-	pub use acala_runtime;
-
-	pub struct AcalaExecutorDispatch;
-	impl sc_executor::NativeExecutionDispatch for AcalaExecutorDispatch {
-		type ExtendHostFunctions = frame_benchmarking::benchmarking::HostFunctions;
-
-		fn dispatch(method: &str, data: &[u8]) -> Option<Vec<u8>> {
-			acala_runtime::api::dispatch(method, data)
-		}
-
-		fn native_version() -> sc_executor::NativeVersion {
-			acala_runtime::native_version()
-		}
-	}
-}
-
-#[cfg(feature = "with-nakamoto-runtime")]
-pub use acala_executor::*;
 #[cfg(feature = "with-nakamoto-runtime")]
 pub use karura_executor::*;
-#[cfg(feature = "with-mandala-runtime")]
-pub use mandala_executor::*;
 
 /// Can be called for a `Configuration` to check if it is a configuration for
 /// the `Acala` network.
@@ -625,7 +583,7 @@ pub fn new_chain_ops(
 				import_queue,
 				task_manager,
 				..
-			} = new_partial::<karura_runtime::RuntimeApi, KaruraExecutorDispatch>(config, false, false)?;
+			} = new_partial::<nakamoto_runtime::RuntimeApi, KaruraExecutorDispatch>(config, false, false)?;
 			Ok((Arc::new(Client::Karura(client)), backend, import_queue, task_manager))
 		}
 		#[cfg(not(feature = "with-nakamoto-runtime"))]

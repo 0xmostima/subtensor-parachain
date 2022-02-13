@@ -140,7 +140,7 @@ pub trait ClientHandle {
 #[derive(Clone)]
 pub enum Client {
 	#[cfg(feature = "with-nakamoto-runtime")]
-	Karura(Arc<crate::FullClient<karura_runtime::RuntimeApi, crate::KaruraExecutorDispatch>>),
+	Karura(Arc<crate::FullClient<nakamoto_runtime::RuntimeApi, crate::KaruraExecutorDispatch>>),
 }
 
 impl ClientHandle for Client {
