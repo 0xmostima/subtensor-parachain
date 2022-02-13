@@ -21,11 +21,9 @@
 #![allow(clippy::upper_case_acronyms)]
 
 pub mod currency;
-pub mod evm;
 pub mod nft;
 pub mod signature;
 pub mod task;
-pub mod unchecked_extrinsic;
 
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
