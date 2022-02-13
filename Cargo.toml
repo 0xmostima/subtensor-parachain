@@ -23,7 +23,6 @@ members = [
 	"orml/rewards",
 	"orml/tokens",
 	"orml/traits",
-	"orml/utilities",
 	"orml/vesting",
 	"orml/weight-gen",
 	"orml/weight-meter",
