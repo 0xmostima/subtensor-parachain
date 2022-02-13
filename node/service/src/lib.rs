@@ -31,7 +31,7 @@ use cumulus_primitives_core::ParaId;
 use cumulus_relay_chain_interface::RelayChainInterface;
 use cumulus_relay_chain_local::build_relay_chain_interface;
 
-use acala_primitives::{Block, Hash};
+use subtensor_primitives::{Block, Hash};
 use cumulus_primitives_parachain_inherent::MockValidationDataInherentDataProvider;
 use sc_client_api::ExecutorProvider;
 use sc_consensus::LongestChain;

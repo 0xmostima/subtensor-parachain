@@ -18,7 +18,7 @@
 
 //! Acala chain configurations.
 
-use acala_primitives::{AccountId, AccountPublic};
+use subtensor_primitives::{AccountId, AccountPublic};
 use sc_chain_spec::ChainSpecExtension;
 use serde::{Deserialize, Serialize};
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;

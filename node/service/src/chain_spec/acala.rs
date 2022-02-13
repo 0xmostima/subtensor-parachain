@@ -16,7 +16,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-use acala_primitives::AccountId;
+use subtensor_primitives::AccountId;
 use hex_literal::hex;
 use sc_chain_spec::{ChainType, Properties};
 use sc_telemetry::TelemetryEndpoints;

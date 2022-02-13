@@ -20,7 +20,7 @@
 
 #![cfg(test)]
 
-use acala_primitives::{AccountId, Balance, BlockNumber};
+use subtensor_primitives::{AccountId, Balance, BlockNumber};
 
 #[test]
 #[cfg(feature = "with-nakamoto-runtime")]
