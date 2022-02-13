@@ -159,14 +159,12 @@ pub trait TokenInfo {
 }
 
 pub type ForeignAssetId = u16;
-pub type Lease = BlockNumber;
 
 #[derive(Encode, Decode, Eq, PartialEq, Copy, Clone, RuntimeDebug, PartialOrd, Ord, TypeInfo, MaxEncodedLen)]
 #[cfg_attr(feature = "std", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "std", serde(rename_all = "camelCase"))]
 pub enum DexShare {
 	Token(TokenSymbol),
-	LiquidCrowdloan(Lease),
 	ForeignAsset(ForeignAssetId),
 }
 
@@ -176,7 +174,6 @@ pub enum DexShare {
 pub enum CurrencyId {
 	Token(TokenSymbol),
 	DexShare(DexShare, DexShare),
-	LiquidCrowdloan(Lease),
 	ForeignAsset(ForeignAssetId),
 }
 
@@ -189,10 +186,6 @@ impl CurrencyId {
 		matches!(self, CurrencyId::DexShare(_, _))
 	}
 
-	pub fn is_liquid_crowdloan_currency_id(&self) -> bool {
-		matches!(self, CurrencyId::LiquidCrowdloan(_))
-	}
-
 	pub fn is_foreign_asset_currency_id(&self) -> bool {
 		matches!(self, CurrencyId::ForeignAsset(_))
 	}
@@ -200,7 +193,7 @@ impl CurrencyId {
 	pub fn is_trading_pair_currency_id(&self) -> bool {
 		matches!(
 			self,
-			CurrencyId::Token(_) | CurrencyId::LiquidCrowdloan(_) | CurrencyId::ForeignAsset(_)
+			CurrencyId::Token(_) |  CurrencyId::ForeignAsset(_)
 		)
 	}
 
@@ -218,17 +211,15 @@ impl CurrencyId {
 	pub fn join_dex_share_currency_id(currency_id_0: Self, currency_id_1: Self) -> Option<Self> {
 		let dex_share_0 = match currency_id_0 {
 			CurrencyId::Token(symbol) => DexShare::Token(symbol),
-			CurrencyId::LiquidCrowdloan(lease) => DexShare::LiquidCrowdloan(lease),
 			CurrencyId::ForeignAsset(foreign_asset_id) => DexShare::ForeignAsset(foreign_asset_id),
 			// Unsupported
-			CurrencyId::DexShare(..) | CurrencyId::StableAssetPoolToken(_) => return None,
+			CurrencyId::DexShare(..) => return None,
 		};
 		let dex_share_1 = match currency_id_1 {
 			CurrencyId::Token(symbol) => DexShare::Token(symbol),
-			CurrencyId::LiquidCrowdloan(lease) => DexShare::LiquidCrowdloan(lease),
 			CurrencyId::ForeignAsset(foreign_asset_id) => DexShare::ForeignAsset(foreign_asset_id),
 			// Unsupported
-			CurrencyId::DexShare(..) | CurrencyId::StableAssetPoolToken(_) => return None,
+			CurrencyId::DexShare(..) => return None,
 		};
 		Some(CurrencyId::DexShare(dex_share_0, dex_share_1))
 	}
@@ -240,9 +231,6 @@ impl From<DexShare> for u32 {
 		match val {
 			DexShare::Token(token) => {
 				bytes[3] = token.into();
-			}
-			DexShare::LiquidCrowdloan(lease) => {
-				bytes[..].copy_from_slice(&lease.to_be_bytes());
 			}
 			DexShare::ForeignAsset(foreign_asset_id) => {
 				bytes[2..].copy_from_slice(&foreign_asset_id.to_be_bytes());
@@ -256,7 +244,6 @@ impl Into<CurrencyId> for DexShare {
 	fn into(self) -> CurrencyId {
 		match self {
 			DexShare::Token(token) => CurrencyId::Token(token),
-			DexShare::LiquidCrowdloan(lease) => CurrencyId::LiquidCrowdloan(lease),
 			DexShare::ForeignAsset(foreign_asset_id) => CurrencyId::ForeignAsset(foreign_asset_id),
 		}
 	}
@@ -271,7 +258,6 @@ pub enum CurrencyIdType {
 	Token = 1, // 0 is prefix of precompile and predeploy
 	DexShare,
 	StableAsset,
-	LiquidCrowdloan,
 	ForeignAsset,
 }
 
@@ -281,7 +267,6 @@ pub enum CurrencyIdType {
 #[repr(u8)]
 pub enum DexShareType {
 	Token,
-	LiquidCrowdloan,
 	ForeignAsset,
 }
 
@@ -289,11 +274,7 @@ impl Into<DexShareType> for DexShare {
 	fn into(self) -> DexShareType {
 		match self {
 			DexShare::Token(_) => DexShareType::Token,
-			DexShare::LiquidCrowdloan(_) => DexShareType::LiquidCrowdloan,
 			DexShare::ForeignAsset(_) => DexShareType::ForeignAsset,
 		}
 	}
 }
-
-/// The first batch of lcDOT that expires at end of least 13
-pub const LCDOT: CurrencyId = CurrencyId::LiquidCrowdloan(13);
