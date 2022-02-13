@@ -180,8 +180,6 @@ impl sc_client_api::BlockBackend<Block> for Client {
 		match self {
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.block_status(id),
-			#[cfg(feature = "with-nakamoto-runtime")]
-			Self::Acala(client) => client.block_status(id),
 		}
 	}
 
@@ -189,8 +187,6 @@ impl sc_client_api::BlockBackend<Block> for Client {
 		match self {
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.justifications(id),
-			#[cfg(feature = "with-nakamoto-runtime")]
-			Self::Acala(client) => client.justifications(id),
 		}
 	}
 
@@ -198,8 +194,6 @@ impl sc_client_api::BlockBackend<Block> for Client {
 		match self {
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.block_hash(number),
-			#[cfg(feature = "with-nakamoto-runtime")]
-			Self::Acala(client) => client.block_hash(number),
 		}
 	}
 
@@ -207,8 +201,6 @@ impl sc_client_api::BlockBackend<Block> for Client {
 		match self {
 			#[cfg(feature = "with-nakamoto-runtime")]
 			Self::Karura(client) => client.indexed_transaction(hash),
-			#[cfg(feature = "with-nakamoto-runtime")]
-			Self::Acala(client) => client.indexed_transaction(hash),
 		}
 	}
 

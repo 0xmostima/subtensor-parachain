@@ -15,7 +15,7 @@ RUN echo $(ls /)
 #RUN git checkout 9506b93
 
 # Build the Parachain Collator node
-RUN CARGO_PROFILE_RELEASE_LTO=true RUSTFLAGS="-C codegen-units=1" cargo build --release
+RUN CARGO_PROFILE_RELEASE_LTO=true RUSTFLAGS="-C codegen-units=1" cargo build --features with-nakamoto-runtime --release
 
 ### The final stage just copies binary and chainspecs
 
