@@ -160,7 +160,6 @@ pub trait TokenInfo {
 }
 
 pub type ForeignAssetId = u16;
-pub type Erc20Id = u32;
 pub type Lease = BlockNumber;
 
 #[derive(Encode, Decode, Eq, PartialEq, Copy, Clone, RuntimeDebug, PartialOrd, Ord, TypeInfo, MaxEncodedLen)]
@@ -192,10 +191,6 @@ impl CurrencyId {
 		matches!(self, CurrencyId::DexShare(_, _))
 	}
 
-	pub fn is_erc20_currency_id(&self) -> bool {
-		matches!(self, CurrencyId::Erc20(_))
-	}
-
 	pub fn is_liquid_crowdloan_currency_id(&self) -> bool {
 		matches!(self, CurrencyId::LiquidCrowdloan(_))
 	}
@@ -207,7 +202,7 @@ impl CurrencyId {
 	pub fn is_trading_pair_currency_id(&self) -> bool {
 		matches!(
 			self,
-			CurrencyId::Token(_) | CurrencyId::Erc20(_) | CurrencyId::LiquidCrowdloan(_) | CurrencyId::ForeignAsset(_)
+			CurrencyId::Token(_) | CurrencyId::LiquidCrowdloan(_) | CurrencyId::ForeignAsset(_)
 		)
 	}
 
@@ -225,7 +220,6 @@ impl CurrencyId {
 	pub fn join_dex_share_currency_id(currency_id_0: Self, currency_id_1: Self) -> Option<Self> {
 		let dex_share_0 = match currency_id_0 {
 			CurrencyId::Token(symbol) => DexShare::Token(symbol),
-			CurrencyId::Erc20(address) => DexShare::Erc20(address),
 			CurrencyId::LiquidCrowdloan(lease) => DexShare::LiquidCrowdloan(lease),
 			CurrencyId::ForeignAsset(foreign_asset_id) => DexShare::ForeignAsset(foreign_asset_id),
 			// Unsupported
@@ -233,7 +227,6 @@ impl CurrencyId {
 		};
 		let dex_share_1 = match currency_id_1 {
 			CurrencyId::Token(symbol) => DexShare::Token(symbol),
-			CurrencyId::Erc20(address) => DexShare::Erc20(address),
 			CurrencyId::LiquidCrowdloan(lease) => DexShare::LiquidCrowdloan(lease),
 			CurrencyId::ForeignAsset(foreign_asset_id) => DexShare::ForeignAsset(foreign_asset_id),
 			// Unsupported
@@ -250,14 +243,6 @@ impl From<DexShare> for u32 {
 			DexShare::Token(token) => {
 				bytes[3] = token.into();
 			}
-			DexShare::Erc20(address) => {
-				// Use first 4 non-zero bytes as u32 to the mapping between u32 and evm address.
-				// Take the first 4 non-zero bytes, if it is less than 4, add 0 to the left.
-				let is_zero = |&&d: &&u8| -> bool { d == 0 };
-				let leading_zeros = address.as_bytes().iter().take_while(is_zero).count();
-				let index = if leading_zeros > 16 { 16 } else { leading_zeros };
-				bytes[..].copy_from_slice(&address[index..index + 4][..]);
-			}
 			DexShare::LiquidCrowdloan(lease) => {
 				bytes[..].copy_from_slice(&lease.to_be_bytes());
 			}
@@ -273,7 +258,6 @@ impl Into<CurrencyId> for DexShare {
 	fn into(self) -> CurrencyId {
 		match self {
 			DexShare::Token(token) => CurrencyId::Token(token),
-			DexShare::Erc20(address) => CurrencyId::Erc20(address),
 			DexShare::LiquidCrowdloan(lease) => CurrencyId::LiquidCrowdloan(lease),
 			DexShare::ForeignAsset(foreign_asset_id) => CurrencyId::ForeignAsset(foreign_asset_id),
 		}
@@ -299,7 +283,6 @@ pub enum CurrencyIdType {
 #[repr(u8)]
 pub enum DexShareType {
 	Token,
-	Erc20,
 	LiquidCrowdloan,
 	ForeignAsset,
 }
@@ -308,7 +291,6 @@ impl Into<DexShareType> for DexShare {
 	fn into(self) -> DexShareType {
 		match self {
 			DexShare::Token(_) => DexShareType::Token,
-			DexShare::Erc20(_) => DexShareType::Erc20,
 			DexShare::LiquidCrowdloan(_) => DexShareType::LiquidCrowdloan,
 			DexShare::ForeignAsset(_) => DexShareType::ForeignAsset,
 		}

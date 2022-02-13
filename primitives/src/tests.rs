@@ -26,45 +26,6 @@ use sp_core::H160;
 use std::str::FromStr;
 
 #[test]
-fn trading_pair_works() {
-	let aca = CurrencyId::Token(TokenSymbol::ACA);
-	let ausd = CurrencyId::Token(TokenSymbol::AUSD);
-	let erc20 = CurrencyId::Erc20(EvmAddress::from_str("0x0000000000000000000000000000000000000000").unwrap());
-	let aca_ausd_lp = CurrencyId::DexShare(DexShare::Token(TokenSymbol::ACA), DexShare::Token(TokenSymbol::AUSD));
-	let erc20_aca_lp = CurrencyId::DexShare(
-		DexShare::Token(TokenSymbol::ACA),
-		DexShare::Erc20(EvmAddress::from_str("0x0000000000000000000000000000000000000000").unwrap()),
-	);
-
-	assert_eq!(
-		TradingPair::from_currency_ids(ausd, aca).unwrap(),
-		TradingPair(aca, ausd)
-	);
-	assert_eq!(
-		TradingPair::from_currency_ids(aca, ausd).unwrap(),
-		TradingPair(aca, ausd)
-	);
-	assert_eq!(
-		TradingPair::from_currency_ids(erc20, aca).unwrap(),
-		TradingPair(aca, erc20)
-	);
-	assert_eq!(TradingPair::from_currency_ids(aca, aca), None);
-
-	assert_eq!(
-		TradingPair::from_currency_ids(ausd, aca)
-			.unwrap()
-			.dex_share_currency_id(),
-		aca_ausd_lp
-	);
-	assert_eq!(
-		TradingPair::from_currency_ids(aca, erc20)
-			.unwrap()
-			.dex_share_currency_id(),
-		erc20_aca_lp
-	);
-}
-
-#[test]
 fn currency_id_try_from_vec_u8_works() {
 	assert_ok!(
 		"ACA".as_bytes().to_vec().try_into(),
@@ -80,45 +41,6 @@ fn currency_id_into_u32_works() {
 	let currency_id = DexShare::Token(TokenSymbol::AUSD);
 	assert_eq!(Into::<u32>::into(currency_id), 0x01);
 
-	let currency_id = DexShare::Erc20(EvmAddress::from_str("0x2000000000000000000000000000000000000000").unwrap());
-	assert_eq!(Into::<u32>::into(currency_id), 0x20000000);
-
-	let currency_id = DexShare::Erc20(EvmAddress::from_str("0x0000000000000001000000000000000000000000").unwrap());
-	assert_eq!(Into::<u32>::into(currency_id), 0x01000000);
-
-	let currency_id = DexShare::Erc20(EvmAddress::from_str("0x0000000000000000000000000000000000000001").unwrap());
-	assert_eq!(Into::<u32>::into(currency_id), 0x01);
-
-	let currency_id = DexShare::Erc20(EvmAddress::from_str("0x0000000000000000000000000000000000000000").unwrap());
-	assert_eq!(Into::<u32>::into(currency_id), 0x00);
-}
-
-#[test]
-fn currency_id_try_into_evm_address_works() {
-	assert_eq!(
-		EvmAddress::try_from(CurrencyId::Token(TokenSymbol::ACA,)),
-		Ok(EvmAddress::from_str("0x0000000000000000000100000000000000000000").unwrap())
-	);
-
-	assert_eq!(
-		EvmAddress::try_from(CurrencyId::DexShare(
-			DexShare::Token(TokenSymbol::ACA),
-			DexShare::Token(TokenSymbol::AUSD),
-		)),
-		Ok(EvmAddress::from_str("0x0000000000000000000200000000000000000001").unwrap())
-	);
-
-	// No check the erc20 is mapped
-	assert_eq!(
-		EvmAddress::try_from(CurrencyId::DexShare(
-			DexShare::Erc20(Default::default()),
-			DexShare::Erc20(Default::default())
-		)),
-		Ok(EvmAddress::from_str("0x0000000000000000000201000000000100000000").unwrap())
-	);
-
-	let erc20 = EvmAddress::from_str("0x1111111111111111111111111111111111111111").unwrap();
-	assert_eq!(EvmAddress::try_from(CurrencyId::Erc20(erc20)), Ok(erc20));
 }
 
 #[test]
