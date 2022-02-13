@@ -44,7 +44,7 @@ pub use sp_runtime::BuildStorage;
 // Polkadot Imports
 use pallet_xcm::XcmPassthrough;
 use polkadot_parachain::primitives::Sibling;
-use polkadot_nakamoto_runtime::{BlockHashCount, RocksDbWeight, SlowAdjustingFeeUpdate};
+use polkadot_runtime_common::{BlockHashCount, RocksDbWeight, SlowAdjustingFeeUpdate};
 
 // XCM Imports
 use xcm::latest::prelude::*;
