@@ -71,6 +71,7 @@ cumulus-relay-chain-local = { git = "https://github.com/paritytech/cumulus", bra
 
 polkadot-primitives = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.16" }
 polkadot-service = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.16" }
+subtensor-primitives = { path = "../../primitives" }
 
 orml-oracle-rpc = { path = "../../orml/oracle/rpc" }
 nakamoto-runtime = { path = "../../runtime/nakamoto", optional = true }
