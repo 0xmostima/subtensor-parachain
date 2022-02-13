@@ -560,49 +560,19 @@ pub fn new_chain_ops(
 	ServiceError,
 > {
 	config.keystore = sc_service::config::KeystoreConfig::InMemory;
-	if config.chain_spec.is_mandala_dev() || config.chain_spec.is_mandala() {
-		#[cfg(feature = "with-mandala-runtime")]
-		{
-			let PartialComponents {
-				client,
-				backend,
-				import_queue,
-				task_manager,
-				..
-			} = new_partial(config, config.chain_spec.is_mandala_dev(), false)?;
-			Ok((Arc::new(Client::Mandala(client)), backend, import_queue, task_manager))
-		}
-		#[cfg(not(feature = "with-mandala-runtime"))]
-		Err(MANDALA_RUNTIME_NOT_AVAILABLE.into())
-	} else if config.chain_spec.is_karura() {
-		#[cfg(feature = "with-nakamoto-runtime")]
-		{
-			let PartialComponents {
-				client,
-				backend,
-				import_queue,
-				task_manager,
-				..
-			} = new_partial::<nakamoto_runtime::RuntimeApi, KaruraExecutorDispatch>(config, false, false)?;
-			Ok((Arc::new(Client::Karura(client)), backend, import_queue, task_manager))
-		}
-		#[cfg(not(feature = "with-nakamoto-runtime"))]
-		Err(KARURA_RUNTIME_NOT_AVAILABLE.into())
-	} else {
-		#[cfg(feature = "with-nakamoto-runtime")]
-		{
-			let PartialComponents {
-				client,
-				backend,
-				import_queue,
-				task_manager,
-				..
-			} = new_partial::<acala_runtime::RuntimeApi, AcalaExecutorDispatch>(config, false, false)?;
-			Ok((Arc::new(Client::Acala(client)), backend, import_queue, task_manager))
-		}
-		#[cfg(not(feature = "with-nakamoto-runtime"))]
-		Err(ACALA_RUNTIME_NOT_AVAILABLE.into())
+	#[cfg(feature = "with-nakamoto-runtime")]
+	{
+		let PartialComponents {
+			client,
+			backend,
+			import_queue,
+			task_manager,
+			..
+		} = new_partial::<nakamoto_runtime::RuntimeApi, KaruraExecutorDispatch>(config, false, false)?;
+		Ok((Arc::new(Client::Karura(client)), backend, import_queue, task_manager))
 	}
+	#[cfg(not(feature = "with-nakamoto-runtime"))]
+	Err(KARURA_RUNTIME_NOT_AVAILABLE.into())
 }
 
 #[cfg(feature = "with-mandala-runtime")]
