@@ -31,8 +31,6 @@ use std::sync::Arc;
 
 pub use sc_rpc::SubscriptionTaskExecutor;
 
-pub use evm_rpc::{EVMApi, EVMApiServer, EVMRuntimeRPCApi};
-
 /// A type representing all RPC extensions.
 pub type RpcExtension = jsonrpc_core::IoHandler<sc_rpc::Metadata>;
 
@@ -57,7 +55,6 @@ where
 	C::Api: substrate_frame_rpc_system::AccountNonceApi<Block, AccountId, Nonce>,
 	C::Api: pallet_transaction_payment_rpc::TransactionPaymentRuntimeApi<Block, Balance>,
 	C::Api: orml_oracle_rpc::OracleRuntimeApi<Block, DataProviderId, CurrencyId, runtime_common::TimeStampedPrice>,
-	C::Api: EVMRuntimeRPCApi<Block, Balance>,
 	C::Api: BlockBuilder<Block>,
 	P: TransactionPool + Sync + Send + 'static,
 {
@@ -85,7 +82,6 @@ where
 	// more context: https://github.com/paritytech/substrate/pull/3480
 	// These RPCs should use an asynchronous caller instead.
 	io.extend_with(OracleApi::to_delegate(Oracle::new(client.clone())));
-	io.extend_with(EVMApiServer::to_delegate(EVMApi::new(client, deny_unsafe)));
 
 	if let Some(command_sink) = command_sink {
 		io.extend_with(
