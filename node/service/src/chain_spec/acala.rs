@@ -34,7 +34,7 @@ use acala_runtime::{
 	PolkadotXcmConfig, SS58Prefix, SessionConfig, SessionDuration, SessionKeys, SessionManagerConfig, SudoConfig,
 	SystemConfig, TechnicalCommitteeMembershipConfig, TokensConfig, VestingConfig, ACA, AUSD, DOT, LDOT,
 };
-use runtime_common::TokenInfo;
+use nakamoto_runtime::TokenInfo;
 
 pub type ChainSpec = sc_service::GenericChainSpec<acala_runtime::GenesisConfig, Extensions>;
 

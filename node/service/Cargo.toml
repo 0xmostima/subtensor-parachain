@@ -75,7 +75,7 @@ subtensor-primitives = { path = "../../primitives" }
 
 orml-oracle-rpc = { path = "../../orml/oracle/rpc" }
 nakamoto-runtime = { path = "../../runtime/nakamoto", optional = true }
-
+subtensor-rpc = { path = "../../rpc" }
 
 [features]
 default = [ "std" ]

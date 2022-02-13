@@ -404,14 +404,14 @@ where
 		let transaction_pool = transaction_pool.clone();
 
 		Box::new(move |deny_unsafe, _| {
-			let deps = acala_rpc::FullDeps {
+			let deps = subtensor_rpc::FullDeps {
 				client: client.clone(),
 				pool: transaction_pool.clone(),
 				deny_unsafe,
 				command_sink: None,
 			};
 
-			Ok(acala_rpc::create_full(deps))
+			Ok(subtensor_rpc::create_full(deps))
 		})
 	};
 
@@ -797,14 +797,14 @@ fn inner_mandala_dev(config: Configuration, instant_sealing: bool) -> Result<Tas
 		let transaction_pool = transaction_pool.clone();
 
 		Box::new(move |deny_unsafe, _| {
-			let deps = acala_rpc::FullDeps {
+			let deps = subtensor_rpc::FullDeps {
 				client: client.clone(),
 				pool: transaction_pool.clone(),
 				deny_unsafe,
 				command_sink: command_sink.clone(),
 			};
 
-			Ok(acala_rpc::create_full(deps))
+			Ok(subtensor_rpc::create_full(deps))
 		})
 	};
 

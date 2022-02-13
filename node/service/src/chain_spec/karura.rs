@@ -32,7 +32,7 @@ use karura_runtime::{
 	SessionDuration, SessionKeys, SessionManagerConfig, SudoConfig, SystemConfig, TechnicalCommitteeMembershipConfig,
 	TokensConfig, VestingConfig, BNC, KAR, KSM, KUSD, LKSM, PHA, VSKSM,
 };
-use runtime_common::TokenInfo;
+use nakamoto_runtime::TokenInfo;
 
 pub type ChainSpec = sc_service::GenericChainSpec<karura_runtime::GenesisConfig, Extensions>;
 
