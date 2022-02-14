@@ -64,6 +64,7 @@ pub fn karura_dev_config() -> Result<ChainSpec, String> {
 				// Sudo account
 				get_account_id_from_seed::<sr25519::Public>("Alice"),
 				vec![],
+				vec![],
 				vec![get_account_id_from_seed::<sr25519::Public>("Alice")],
 			)
 		},
