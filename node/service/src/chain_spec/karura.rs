@@ -42,10 +42,6 @@ fn karura_properties() -> Properties {
 	let mut properties = Map::new();
 	let mut token_symbol: Vec<String> = vec![];
 	let mut token_decimals: Vec<u32> = vec![];
-	[KAR, KUSD, KSM, LKSM, BNC, VSKSM, PHA].iter().for_each(|token| {
-		token_symbol.push(token.symbol().unwrap().to_string());
-		token_decimals.push(token.decimals().unwrap() as u32);
-	});
 	properties.insert("tokenSymbol".into(), token_symbol.into());
 	properties.insert("tokenDecimals".into(), token_decimals.into());
 	properties.insert("ss58Format".into(), SS58Prefix::get().into());
@@ -115,6 +111,11 @@ fn karura_genesis(
 					)
 				})
 				.collect(),
+		},
+		collator_selection: CollatorSelectionConfig {
+			invulnerables: initial_authorities.iter().cloned().map(|(acc, _)| acc).collect(),
+			candidacy_bond: Zero::zero(),
+			..Default::default()
 		},
 		// no need to pass anything to aura, in fact it will panic if we do. Session will take care
 		// of this.
