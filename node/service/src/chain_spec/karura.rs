@@ -35,10 +35,6 @@ pub type ChainSpec = sc_service::GenericChainSpec<nakamoto_runtime::GenesisConfi
 
 pub const PARA_ID: u32 = 2000;
 
-pub fn karura_config() -> Result<ChainSpec, String> {
-	ChainSpec::from_json_bytes(&include_bytes!("../../../../resources/karura-dist.json")[..])
-}
-
 fn karura_properties() -> Properties {
 	let mut properties = Map::new();
 	let mut token_symbol: Vec<String> = vec![];
