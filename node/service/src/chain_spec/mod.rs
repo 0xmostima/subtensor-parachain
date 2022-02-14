@@ -27,11 +27,7 @@ use sp_finality_grandpa::AuthorityId as GrandpaId;
 use sp_runtime::traits::IdentifyAccount;
 
 #[cfg(feature = "with-nakamoto-runtime")]
-pub mod acala;
-#[cfg(feature = "with-nakamoto-runtime")]
 pub mod karura;
-#[cfg(feature = "with-mandala-runtime")]
-pub mod mandala;
 
 mod tests;
 

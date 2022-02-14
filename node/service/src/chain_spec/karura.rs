@@ -27,10 +27,8 @@ use crate::chain_spec::{get_account_id_from_seed, get_parachain_authority_keys_f
 
 use nakamoto_runtime::{
 	Balance, BalancesConfig, BlockNumber, ParachainInfoConfig, PolkadotXcmConfig, SS58Prefix, SessionConfig,
-	SessionDuration, SessionKeys, SessionManagerConfig, SudoConfig, SystemConfig,
-	TokensConfig, BNC, KAR, KSM, KUSD, LKSM, PHA, VSKSM,
+	SessionKeys, SystemConfig,
 };
-use nakamoto_runtime::TokenInfo;
 
 pub type ChainSpec = sc_service::GenericChainSpec<nakamoto_runtime::GenesisConfig, Extensions>;
 
@@ -69,14 +67,6 @@ pub fn karura_dev_config() -> Result<ChainSpec, String> {
 				vec![get_parachain_authority_keys_from_seed("Alice")],
 				// Sudo account
 				get_account_id_from_seed::<sr25519::Public>("Alice"),
-				vec![
-					(get_account_id_from_seed::<sr25519::Public>("Alice"), 1000 * dollar(KAR)),
-					(get_account_id_from_seed::<sr25519::Public>("Bob"), 1000 * dollar(KAR)),
-					(
-						get_account_id_from_seed::<sr25519::Public>("Charlie"),
-						1000 * dollar(KAR),
-					),
-				],
 				vec![],
 				vec![get_account_id_from_seed::<sr25519::Public>("Alice")],
 			)
