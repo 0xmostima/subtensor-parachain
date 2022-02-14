@@ -26,11 +26,9 @@ use sp_runtime::traits::Zero;
 use crate::chain_spec::{get_account_id_from_seed, get_parachain_authority_keys_from_seed, Extensions};
 
 use nakamoto_runtime::{
-	dollar, Balance, BalancesConfig, BlockNumber, CdpEngineConfig, CdpTreasuryConfig, CollatorSelectionConfig,
-	DexConfig, FinancialCouncilMembershipConfig, GeneralCouncilMembershipConfig, HomaCouncilMembershipConfig,
-	OperatorMembershipAcalaConfig, OrmlNFTConfig, ParachainInfoConfig, PolkadotXcmConfig, SS58Prefix, SessionConfig,
-	SessionDuration, SessionKeys, SessionManagerConfig, SudoConfig, SystemConfig, TechnicalCommitteeMembershipConfig,
-	TokensConfig, VestingConfig, BNC, KAR, KSM, KUSD, LKSM, PHA, VSKSM,
+	Balance, BalancesConfig, BlockNumber, ParachainInfoConfig, PolkadotXcmConfig, SS58Prefix, SessionConfig,
+	SessionDuration, SessionKeys, SessionManagerConfig, SudoConfig, SystemConfig,
+	TokensConfig, BNC, KAR, KSM, KUSD, LKSM, PHA, VSKSM,
 };
 use nakamoto_runtime::TokenInfo;
 
@@ -113,51 +111,10 @@ fn karura_genesis(
 			balances: initial_allocation,
 		},
 		sudo: SudoConfig { key: Some(root_key) },
-		general_council: Default::default(),
-		general_council_membership: GeneralCouncilMembershipConfig {
-			members: general_councils,
-			phantom: Default::default(),
-		},
-		financial_council: Default::default(),
-		financial_council_membership: FinancialCouncilMembershipConfig {
-			members: vec![],
-			phantom: Default::default(),
-		},
-		homa_council: Default::default(),
-		homa_council_membership: HomaCouncilMembershipConfig {
-			members: vec![],
-			phantom: Default::default(),
-		},
-		technical_committee: Default::default(),
-		technical_committee_membership: TechnicalCommitteeMembershipConfig {
-			members: vec![],
-			phantom: Default::default(),
-		},
-		operator_membership_acala: OperatorMembershipAcalaConfig {
-			members: vec![],
-			phantom: Default::default(),
-		},
-		democracy: Default::default(),
-		treasury: Default::default(),
 		tokens: TokensConfig { balances: vec![] },
-		vesting: VestingConfig { vesting: vesting_list },
-		cdp_treasury: CdpTreasuryConfig {
-			expected_collateral_auction_size: vec![],
-		},
-		cdp_engine: CdpEngineConfig {
-			collaterals_params: vec![],
-			global_interest_rate_per_sec: Default::default(),
-		},
-		evm: Default::default(),
-		dex: DexConfig {
-			initial_listing_trading_pairs: vec![],
-			initial_enabled_trading_pairs: vec![],
-			initial_added_liquidity_pools: vec![],
-		},
 		parachain_info: ParachainInfoConfig {
 			parachain_id: PARA_ID.into(),
 		},
-		orml_nft: OrmlNFTConfig { tokens: vec![] },
 		collator_selection: CollatorSelectionConfig {
 			invulnerables: initial_authorities.iter().cloned().map(|(acc, _)| acc).collect(),
 			candidacy_bond: Zero::zero(),
@@ -175,9 +132,6 @@ fn karura_genesis(
 					)
 				})
 				.collect(),
-		},
-		session_manager: SessionManagerConfig {
-			session_duration: SessionDuration::get(),
 		},
 		// no need to pass anything to aura, in fact it will panic if we do. Session will take care
 		// of this.
