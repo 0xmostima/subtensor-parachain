@@ -25,7 +25,7 @@ use sp_runtime::traits::Zero;
 
 use crate::chain_spec::{get_account_id_from_seed, get_parachain_authority_keys_from_seed, Extensions};
 
-use karura_runtime::{
+use nakamoto_runtime::{
 	dollar, Balance, BalancesConfig, BlockNumber, CdpEngineConfig, CdpTreasuryConfig, CollatorSelectionConfig,
 	DexConfig, FinancialCouncilMembershipConfig, GeneralCouncilMembershipConfig, HomaCouncilMembershipConfig,
 	OperatorMembershipAcalaConfig, OrmlNFTConfig, ParachainInfoConfig, PolkadotXcmConfig, SS58Prefix, SessionConfig,
@@ -34,7 +34,7 @@ use karura_runtime::{
 };
 use nakamoto_runtime::TokenInfo;
 
-pub type ChainSpec = sc_service::GenericChainSpec<karura_runtime::GenesisConfig, Extensions>;
+pub type ChainSpec = sc_service::GenericChainSpec<nakamoto_runtime::GenesisConfig, Extensions>;
 
 pub const PARA_ID: u32 = 2000;
 
@@ -58,7 +58,7 @@ fn karura_properties() -> Properties {
 }
 
 pub fn karura_dev_config() -> Result<ChainSpec, String> {
-	let wasm_binary = karura_runtime::WASM_BINARY.unwrap_or_default();
+	let wasm_binary = nakamoto_runtime::WASM_BINARY.unwrap_or_default();
 
 	Ok(ChainSpec::from_genesis(
 		"Acala Karura Dev",
@@ -103,8 +103,8 @@ fn karura_genesis(
 	initial_allocation: Vec<(AccountId, Balance)>,
 	vesting_list: Vec<(AccountId, BlockNumber, BlockNumber, u32, Balance)>,
 	general_councils: Vec<AccountId>,
-) -> karura_runtime::GenesisConfig {
-	karura_runtime::GenesisConfig {
+) -> nakamoto_runtime::GenesisConfig {
+	nakamoto_runtime::GenesisConfig {
 		system: SystemConfig {
 			// Add Wasm runtime to storage.
 			code: wasm_binary.to_vec(),

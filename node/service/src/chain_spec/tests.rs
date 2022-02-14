@@ -27,7 +27,7 @@ use subtensor_primitives::{AccountId, Balance, BlockNumber};
 fn karura_foundation_accounts_config_is_correct() {
 	use sp_core::crypto::Ss58Codec;
 
-	let karura_foundation_accounts = karura_runtime::KaruraFoundationAccounts::get();
+	let karura_foundation_accounts = nakamoto_runtime::KaruraFoundationAccounts::get();
 	assert!(karura_foundation_accounts
 		.contains(&AccountId::from_string("tij5W2NzmtxxAbwudwiZpif9ScmZfgFYdzrJWKYq6oNbSNH").unwrap()),);
 	assert!(karura_foundation_accounts
