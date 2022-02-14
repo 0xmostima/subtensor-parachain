@@ -86,22 +86,7 @@ impl SubstrateCli for Cli {
 
 					#[cfg(not(feature = "with-nakamoto-runtime"))]
 					return Err(service::KARURA_RUNTIME_NOT_AVAILABLE.into());
-				} else if chain_spec.is_acala() {
-					#[cfg(feature = "with-nakamoto-runtime")]
-					{
-						Box::new(chain_spec::acala::ChainSpec::from_json_file(path)?)
-					}
-					#[cfg(not(feature = "with-nakamoto-runtime"))]
-					return Err(service::ACALA_RUNTIME_NOT_AVAILABLE.into());
-				} else {
-					#[cfg(feature = "with-mandala-runtime")]
-					{
-						Box::new(chain_spec::mandala::ChainSpec::from_json_file(path)?)
-					}
-					#[cfg(not(feature = "with-mandala-runtime"))]
-					return Err(service::MANDALA_RUNTIME_NOT_AVAILABLE.into());
 				}
-			}
 		})
 	}
 
