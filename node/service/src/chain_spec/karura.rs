@@ -110,15 +110,8 @@ fn karura_genesis(
 		balances: BalancesConfig {
 			balances: initial_allocation,
 		},
-		sudo: SudoConfig { key: Some(root_key) },
-		tokens: TokensConfig { balances: vec![] },
 		parachain_info: ParachainInfoConfig {
 			parachain_id: PARA_ID.into(),
-		},
-		collator_selection: CollatorSelectionConfig {
-			invulnerables: initial_authorities.iter().cloned().map(|(acc, _)| acc).collect(),
-			candidacy_bond: Zero::zero(),
-			..Default::default()
 		},
 		session: SessionConfig {
 			keys: initial_authorities
