@@ -27,6 +27,7 @@ use crate::chain_spec::{get_account_id_from_seed, get_parachain_authority_keys_f
 
 use nakamoto_runtime::{
 	Balance, BalancesConfig, BlockNumber, ParachainInfoConfig, PolkadotXcmConfig, SS58Prefix, SessionConfig,
+	CollatorSelectionConfig,
 	SessionKeys, SystemConfig,
 };
 
