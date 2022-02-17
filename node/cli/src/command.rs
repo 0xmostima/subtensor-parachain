@@ -24,6 +24,7 @@ use codec::Encode;
 use cumulus_client_service::genesis::generate_genesis_block;
 use cumulus_primitives_core::ParaId;
 use service::{chain_spec, IdentifyVariant};
+use service::{nakamoto_runtime::{Block, RuntimeApi}, KaruraExecutorDispatch as Executor};
 
 use log::info;
 use sc_cli::{
@@ -160,19 +161,6 @@ fn extract_genesis_wasm(chain_spec: &Box<dyn service::ChainSpec>) -> Result<Vec<
 		.top
 		.remove(sp_core::storage::well_known_keys::CODE)
 		.ok_or_else(|| "Could not find wasm file in genesis state!".into())
-}
-
-macro_rules! with_runtime_or_err {
-	($chain_spec:expr, { $( $code:tt )* }) => {
-		#[cfg(feature = "with-nakamoto-runtime")]
-		#[allow(unused_imports)]
-		use service::{nakamoto_runtime::{Block, RuntimeApi}, KaruraExecutorDispatch as Executor};
-		#[cfg(feature = "with-nakamoto-runtime")]
-		$( $code )*
-
-		#[cfg(not(feature = "with-nakamoto-runtime"))]
-		return Err(service::KARURA_RUNTIME_NOT_AVAILABLE.into());
-	}
 }
 
 /// Parses acala specific CLI arguments and run the service.
