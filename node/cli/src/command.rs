@@ -74,17 +74,8 @@ impl SubstrateCli for Cli {
 			"karura-dev" => Box::new(chain_spec::karura::karura_dev_config()?),
 			path => {
 				let path = std::path::PathBuf::from(path);
-
-				let chain_spec = Box::new(service::chain_spec::DummyChainSpec::from_json_file(path.clone())?)
-					as Box<dyn service::ChainSpec>;
-
-				#[cfg(feature = "with-nakamoto-runtime")]
-				{
-					Box::new(chain_spec::karura::ChainSpec::from_json_file(path)?)
-				}
-
-				#[cfg(not(feature = "with-nakamoto-runtime"))]
-				return Err(service::KARURA_RUNTIME_NOT_AVAILABLE.into());
+				Box::new(chain_spec::karura::ChainSpec::from_json_file(path)?);
+			}
 		})
 	}
 
