@@ -190,9 +190,7 @@ pub fn run() -> sc_cli::Result<()> {
 
 			set_default_ss58_version(chain_spec);
 
-			with_runtime_or_err!(chain_spec, {
-				return runner.sync_run(|config| cmd.run::<Block, Executor>(config));
-			})
+			return runner.sync_run(|config| cmd.run::<Block, Executor>(config));
 		}
 
 		Some(Subcommand::Key(cmd)) => cmd.run(&cli),
@@ -298,7 +296,7 @@ pub fn run() -> sc_cli::Result<()> {
 
 			let chain_spec = cli.load_spec(&params.chain.clone().unwrap_or_default())?;
 			let state_version = Cli::native_runtime_version(&chain_spec).state_version();
-			let output_buf = with_runtime_or_err!(chain_spec, {
+			let output_buf = 
 				{
 					let block: Block =
 						generate_genesis_block(&chain_spec, state_version).map_err(|e| format!("{:?}", e))?;
@@ -309,8 +307,7 @@ pub fn run() -> sc_cli::Result<()> {
 						format!("0x{:?}", HexDisplay::from(&block.header().encode())).into_bytes()
 					};
 					buf
-				}
-			});
+				};
 
 			if let Some(output) = &params.output {
 				std::fs::write(output, output_buf)?;
@@ -350,14 +347,12 @@ pub fn run() -> sc_cli::Result<()> {
 
 			ensure_dev(chain_spec).map_err(|err| format!("try-runtime error: {}", err))?;
 
-			with_runtime_or_err!(chain_spec, {
-				return runner.async_run(|config| {
-					let registry = config.prometheus_config.as_ref().map(|cfg| &cfg.registry);
-					let task_manager = sc_service::TaskManager::new(config.tokio_handle.clone(), registry)
-						.map_err(|e| sc_cli::Error::Service(sc_service::Error::Prometheus(e)))?;
-					Ok((cmd.run::<Block, Executor>(config), task_manager))
-				});
-			})
+			return runner.async_run(|config| {
+				let registry = config.prometheus_config.as_ref().map(|cfg| &cfg.registry);
+				let task_manager = sc_service::TaskManager::new(config.tokio_handle.clone(), registry)
+					.map_err(|e| sc_cli::Error::Service(sc_service::Error::Prometheus(e)))?;
+				Ok((cmd.run::<Block, Executor>(config), task_manager))
+			});
 		}
 
 		None => {
@@ -400,14 +395,12 @@ pub fn run() -> sc_cli::Result<()> {
 					if config.role.is_authority() { "yes" } else { "no" }
 				);
 
-				with_runtime_or_err!(config.chain_spec, {
 					{
 						service::start_node::<RuntimeApi, Executor>(config, polkadot_config, id)
 							.await
 							.map(|r| r.0)
 							.map_err(Into::into)
 					}
-				})
 			})
 		}
 	}
