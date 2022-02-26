@@ -71,11 +71,15 @@ impl SubstrateCli for Cli {
 		}
 
 		Ok(match id {
-			#[cfg(feature = "with-nakamoto-runtime")]
 			"karura-dev" => Box::new(chain_spec::karura::karura_dev_config()?),
 			path => {
 				let path = std::path::PathBuf::from(path);
-				Box::new(chain_spec::karura::ChainSpec::from_json_file(path)?);
+				#[cfg(feature = "with-nakamoto-runtime")]
+				{
+					Box::new(chain_spec::karura::ChainSpec::from_json_file(path)?)
+				}
+				#[cfg(not(feature = "with-nakamoto-runtime"))]
+				return Err(service::KARURA_RUNTIME_NOT_AVAILABLE.into());
 			}
 		})
 	}
